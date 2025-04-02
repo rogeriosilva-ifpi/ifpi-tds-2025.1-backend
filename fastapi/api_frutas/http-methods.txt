@@ -1,0 +1,9 @@
+HTTP METHODS -- Métodos ou Verbos HTTP
+--------------
+GET --> Obter dados da API
+  Exemplos:
+  TODOS: GET http://127.0.0.1/frutas
+  UMA Só: GET http://127.0.0.1/frutas/2
+POST --> Criar Objetos na API
+PUT --> Alterar Objetos
+DELETE --> Remover Objetos

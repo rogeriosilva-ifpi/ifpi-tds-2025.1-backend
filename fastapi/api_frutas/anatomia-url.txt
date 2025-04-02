@@ -1,0 +1,12 @@
+ANATOMIA DE UMA URL
+
+http://api.ygor.com.br/clientes/18?order=ASC&active=1
+http://www.ygor.com.br
+
+PROTOCOLO: http:// ou https://
+DOMINIO: ygor.com.br
+SUB-DOMINIO: api
+
+PATH: /clientes
+ROUTE/PATH PARAM: 18
+QUERY PARAM: "order" com valor "ASC", "active" com valor "1"
