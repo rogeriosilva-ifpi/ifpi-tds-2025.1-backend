@@ -21,7 +21,7 @@ Os códigos estarão organizados por tópicos conforme o avanço da disciplina. 
 ## Como Utilizar
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/ifpi-tds-2025.1-backend.git
+   git clone https://github.com/rogeriosilva-ifpi/ifpi-tds-2025.1-backend.git
    ```
 2. Acesse a pasta do projeto:
    ```bash
