@@ -1,7 +1,7 @@
 # https://www.freecodecamp.org/news/work-with-sqlite-in-python-handbook/
 import sqlite3
 
-from modelos import Veiculo
+from modelos import Veiculo, VeiculoCreate
 
 
 class VeiculoDAO():
@@ -61,10 +61,31 @@ class VeiculoDAO():
   
   
   def remover_por_id(self, id: int):
-    pass
+    with sqlite3.connect('veiculos.db') as con:
+      cursor =  con.cursor()
+    
+      sql = 'delete from Veiculos where id=?'
+      cursor.execute(sql,(id,))
+      resultado = cursor.fetchone()
+
+      if not resultado:
+        return 
 
   def atualizar(self, id: int, veiculo: Veiculo):
     pass
 
-  def inserir(self, veiculo: Veiculo):
-    pass
+  def inserir(self, veiculo: VeiculoCreate):
+    with sqlite3.connect('veiculos.db') as c:
+      cursor = c.cursor()
+
+      sql = '''INSERT INTO Veiculos(nome, ano_fabricacao, ano_modelo, valor)
+            VALUES (?, ?, ?, ?)'''
+      
+      cursor.execute(sql, (veiculo.nome, 
+                            veiculo.ano_fabricacao, 
+                            veiculo.ano_modelo, 
+                            veiculo.valor))
+      
+      
+      id = cursor.lastrowid
+      return Veiculo(id=id, **veiculo.dict())
