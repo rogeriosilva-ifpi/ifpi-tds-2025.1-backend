@@ -1,45 +1,18 @@
-from fastapi import FastAPI, HTTPException, status
-from modelos import VeiculoCreate
-from veiculos_dao import VeiculoDAO
+from fastapi import FastAPI
+from veiculos_routes import roteador_veiculos
+from auth_routes import router as roteador_auth
+from montadoras_routes import app as roteador_montadoras
 
 app = FastAPI()
 
+# Rotas de Veículos
+app.include_router(roteador_veiculos)
 
-veiculos_dao = VeiculoDAO()
+# Rotas de Autenticaco
+app.include_router(roteador_auth)
 
-
-@app.post('/veiculos', status_code=status.HTTP_201_CREATED)
-def veiculos_create(novo: VeiculoCreate):
-  veiculo  = veiculos_dao.inserir(novo)
-
-  return veiculo
-
-
-@app.get('/veiculos')
-def veiculos_list():
-  veiculos = veiculos_dao.todos()
-  return veiculos
+# Rotas de Montadas
+app.include_router(roteador_montadoras)
 
 
-@app.get('/veiculos/{id}')
-def veiculos_detail(id: int):
-  veiculo = veiculos_dao.obter_por_id(id)
-
-  if veiculo:
-    return veiculo
-  else:
-    raise HTTPException(
-      status_code=status.HTTP_404_NOT_FOUND,
-      detail=f'Não existe um veículo com id = {id}'
-    )
-  
-@app.delete('/veiculos/{id}',status_code=status.HTTP_204_NO_CONTENT)
-def delete_veiculo(id:int):
-  if veiculos_detail(id):
-    veiculos_dao.remover_por_id(id)
-  else:
-    raise HTTPException(
-      status_code=status.HTTP_404_NOT_FOUND,
-      detail=f'Não existe um veículo com id = {id}'
-    )
 
