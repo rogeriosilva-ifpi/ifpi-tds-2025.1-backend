@@ -1,9 +1,9 @@
-import email
-from fastapi import APIRouter, status, HTTPException
+from typing import Annotated
+from fastapi import APIRouter, Depends, status, HTTPException
 
 from auth_dao import AuthDAO
-from auth_utils import hash_password, is_valid_password, verify_hash_password
-from modelos import  SignInUser, SignUpUser
+from auth_utils import create_jwt_token, get_current_user, hash_password, is_valid_password, verify_hash_password
+from modelos import  SignInUser, SignUpUser, Usuario
 
 router = APIRouter()
 
@@ -21,7 +21,11 @@ def login(data: SignInUser):
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, 
                         detail=f'Email e/ou senha incorreto(s)!')
   
-  return {'usuario': usuario_existente.nome}
+  access_token = create_jwt_token(usuario_existente.email)
+  
+  return {
+    'username': usuario_existente.nome,
+    'access_token': access_token}
 
 
 @router.post('/auth/signup', status_code=status.HTTP_201_CREATED)
@@ -44,3 +48,11 @@ def signup(data: SignUpUser):
 @router.post('/auth/forget-password')
 def forget_password():
   ...
+
+
+@router.get('/auth/me')
+def me(user: Annotated[Usuario, Depends(get_current_user)]):
+  return {
+    'name': user.nome,
+    'email': user.email
+  }

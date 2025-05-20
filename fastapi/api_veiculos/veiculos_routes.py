@@ -1,5 +1,7 @@
-from fastapi import APIRouter, HTTPException, status
-from modelos import VeiculoCreate
+from typing import Annotated
+from fastapi import APIRouter, Depends, HTTPException, status
+from auth_utils import get_current_user
+from modelos import Usuario, VeiculoCreate
 from veiculos_dao import VeiculoDAO
 
 roteador_veiculos = APIRouter()
@@ -7,15 +9,16 @@ roteador_veiculos = APIRouter()
 veiculos_dao = VeiculoDAO()
 
 @roteador_veiculos.post('/veiculos', status_code=status.HTTP_201_CREATED)
-def veiculos_create(novo: VeiculoCreate):
-  veiculo  = veiculos_dao.inserir(novo)
+def veiculos_create(novo: VeiculoCreate, user: Annotated[Usuario, Depends(get_current_user)]):
+
+  veiculo  = veiculos_dao.inserir(novo, user)
 
   return veiculo
 
 
 @roteador_veiculos.get('/veiculos')
-def veiculos_list():
-  veiculos = veiculos_dao.todos()
+def veiculos_list(user: Annotated[Usuario, Depends(get_current_user)]):
+  veiculos = veiculos_dao.todos_por_usuario(user)
   return veiculos
 
 

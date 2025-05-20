@@ -1,7 +1,7 @@
 # https://www.freecodecamp.org/news/work-with-sqlite-in-python-handbook/
 import sqlite3
 
-from modelos import Veiculo, VeiculoCreate
+from modelos import Usuario, Veiculo, VeiculoCreate
 
 
 class VeiculoDAO():
@@ -15,6 +15,30 @@ class VeiculoDAO():
 
       select_query = 'SELECT * from Veiculos;'
       cursor.execute(select_query)
+
+      veiculos_list = cursor.fetchall()
+
+      veiculos: list[Veiculo] = []
+
+      for v in veiculos_list:
+        veiculo = Veiculo(
+          id=v[0], 
+          nome=v[1], 
+          ano_fabricacao=v[2],
+          ano_modelo=v[3], 
+          valor=v[4]
+        )
+
+        veiculos.append(veiculo)
+
+      return veiculos
+    
+  def todos_por_usuario(self, usuario: Usuario):
+    with sqlite3.connect('veiculos.db') as connection:
+      cursor = connection.cursor()
+
+      select_query = 'SELECT * FROM Veiculos WHERE usuario_id = ?;'
+      cursor.execute(select_query, (usuario.id,))
 
       veiculos_list = cursor.fetchall()
 
@@ -74,17 +98,18 @@ class VeiculoDAO():
   def atualizar(self, id: int, veiculo: Veiculo):
     pass
 
-  def inserir(self, veiculo: VeiculoCreate):
+  def inserir(self, veiculo: VeiculoCreate, usuario: Usuario):
     with sqlite3.connect('veiculos.db') as c:
       cursor = c.cursor()
 
-      sql = '''INSERT INTO Veiculos(nome, ano_fabricacao, ano_modelo, valor)
-            VALUES (?, ?, ?, ?)'''
+      sql = '''INSERT INTO Veiculos(nome, ano_fabricacao, ano_modelo, valor, usuario_id)
+            VALUES (?, ?, ?, ?, ?)'''
       
       cursor.execute(sql, (veiculo.nome, 
                             veiculo.ano_fabricacao, 
                             veiculo.ano_modelo, 
-                            veiculo.valor))
+                            veiculo.valor,
+                            usuario.id))
       
       
       id = cursor.lastrowid
