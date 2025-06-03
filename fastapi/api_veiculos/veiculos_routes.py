@@ -8,8 +8,11 @@ roteador_veiculos = APIRouter()
 
 veiculos_dao = VeiculoDAO()
 
+# Abreviação / Alias para Tipo
+LoggedUser = Annotated[Usuario, Depends(get_current_user)]
+
 @roteador_veiculos.post('/veiculos', status_code=status.HTTP_201_CREATED)
-def veiculos_create(novo: VeiculoCreate, user: Annotated[Usuario, Depends(get_current_user)]):
+def veiculos_create(novo: VeiculoCreate, user: LoggedUser):
 
   veiculo  = veiculos_dao.inserir(novo, user)
 
@@ -17,7 +20,7 @@ def veiculos_create(novo: VeiculoCreate, user: Annotated[Usuario, Depends(get_cu
 
 
 @roteador_veiculos.get('/veiculos')
-def veiculos_list(user: Annotated[Usuario, Depends(get_current_user)]):
+def veiculos_list(user: LoggedUser):
   veiculos = veiculos_dao.todos_por_usuario(user)
   return veiculos
 
