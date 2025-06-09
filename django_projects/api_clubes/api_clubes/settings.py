@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['api-jogadores-dj.onrender.com', 'localhost']
 
+CSRF_TRUSTED_ORIGINS = ['https://api-jogadores-dj.onrender.com']
+
 
 # Application definition
 
