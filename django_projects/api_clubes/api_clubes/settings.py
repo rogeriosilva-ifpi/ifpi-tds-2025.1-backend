@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-m9x3w*=d4!xc$st+0l_0+-4c4z#q2h9(r#q_ufq(mbh1@2e43n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api-jogadores-dj.onrender.com']
 
 
 # Application definition
