@@ -1,4 +1,5 @@
 import datetime
+from pyexpat import model
 from django.db import models
 
 
@@ -13,7 +14,10 @@ class Clube(models.Model):
 
 
 class Jogador(models.Model):
-  nome = models.CharField()
+  nome = models.CharField(null=False)
+
+  # relacionamentos
+  clube = models.ForeignKey(Clube, on_delete=models.SET_NULL, null=True)
 
   class Meta:
     verbose_name_plural = 'Jogadores'
