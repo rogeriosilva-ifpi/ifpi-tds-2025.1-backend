@@ -21,6 +21,7 @@ admin.site.register(Clube, ClubeAdmin)
 class JogadorAdmin(admin.ModelAdmin):
   list_display = ['nome', 'clube']
   search_fields = ('nome',)
+  list_filter = ('clube',)
 
 
 admin.site.register(Jogador, JogadorAdmin)
