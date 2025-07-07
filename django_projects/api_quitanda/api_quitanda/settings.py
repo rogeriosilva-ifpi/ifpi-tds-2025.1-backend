@@ -74,10 +74,22 @@ WSGI_APPLICATION = 'api_quitanda.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "quitanda",
+        "USER": "ifpi_user",
+        "PASSWORD": "aXyF1W9f3d1dAe62pzfhAYr3cjsNAEsx",
+        "HOST": "dpg-d1m5brripnbc73fqj2ag-a.ohio-postgres.render.com",
+        "PORT": "5432",
+    },
+    "mysql": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "my_quitanda",
+        "USER": "root",
+        "PASSWORD": "root",
+        "HOST": "127.0.0.1",
+        "PORT": "3306",
+    },
 }
 
 

@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from .models import Produto
 from .serializers import ProdutoSerializer
 
+
 class ProdutoView(APIView):
 
   def get(self, request):
