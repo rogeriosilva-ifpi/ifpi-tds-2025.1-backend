@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-8e_3h#-h)02^g8h$k2upkjl5nsp7qt=nf9bu@v^+=ul6=6hds2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api-quitanda.onrender.com', 'localhost']
+
+CSRF_TRUSTED_ORIGINS = ['https://api-quitanda.onrender.com']
+
+
 
 
 # Application definition
